@@ -1,0 +1,45 @@
+~SysMsgKey,~SysMsgTag,~Content
+000,Game_Title,"A Girl within the Ancient Era"
+001,Game_Version,0.0.0
+002,Game_Revision,000000
+003,Game_ReleaseType,Private_Alpha
+004,Space_Tag,"           "
+005,Welcome_Tag,"Welcome to the Game! =>"
+006,Started_Tag,"System Started! => "
+007,Operation_Tag,"Operation Completed! => "
+008,FatalError_Tag,"Fatal Error Detected! => "
+009,Terminate_Tag,"Warning Detected! => "
+010,Warning_Tag,"Game will be Terminated! => "
+011,OS_Tag,"Operating System : "
+012,DN_Tag,"Device Name : "
+013,GDN_Tag,"Graphics Device : "
+014,GDV_Tag,"Graphics Device Vendor : "
+015,Processor_Tag,"Processor : "
+016,GMS_Tag,"Graphics Memory Size : "
+017,SMS_Tag,"System Memory Size : "
+018,OperationMsg_001,"File Loaded."
+019,OperationMsg_002,"Logging Started."
+020,OperationMsg_003,"Querying the System Info."
+021,OperationMsg_004,"Info was queried successfully."
+022,OperationMsg_ItemStrLoaded," Item Strings was loaded."
+023,OperationMsg_AreaStrLoaded," Area Strings was loaded."
+024,OperationMsg_UIStrLoaded," UI Strings was loaded."
+025,OperationMsg_TalkStrLoaded," Talk Strings was loaded."
+026,OperationMsg_RDStrLoaded," RD Strings was loaded."
+027,UnexpectedErrorMsg_JP,indigoは予期せぬ問題により終了します。問題解決のためにゲームファイルをチェックしてください。
+028,UnexpectedErrorMsg_EN,"unfortunately indigo will shut down due to unexpected error.\nPlease check your game file for repair."
+029,UnexpectedError_Reason001,"Can't Load the String Table."
+030,Terminate_Reason001,"Please fix the fatal error of the game."
+031,Terminate_Reason002,"Detected the Memory leak. Please report to the dev if you are getting this reason repeatly."
+032,Terminate_Reason003,"Invalid Value."
+033,,
+034,,
+035,,
+036,,
+037,,
+038,,
+039,,
+040,,
+041,,
+042,,
+043,,

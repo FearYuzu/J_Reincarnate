@@ -1,0 +1,12 @@
+~MetaID,~Value
+Language,Japanese
+FPS,60
+Res_h,1080
+Res_w,1920
+WindowMode,Window
+BGMVolume,100
+SEVolume,100
+JP_FontLoadPath,/Resources/font/font.otf
+EN_FontLoadPath,/Resources/font/font.otf
+HANT_FontLoadPath,/Resources/font/font.otf
+HANS_FontLoadPath,/Resources/font/font.otf
