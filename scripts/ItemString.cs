@@ -7,11 +7,13 @@ public class ItemString : MonoBehaviour {
     public string ItemString00002 = "";
     [SerializeField]
     public List<Type> ItemStringTable = new List<Type>();                 // declaration
-    public List<String> ItemKey = new List<String>(1000);
-    public List<String> ItemName = new List<String>(1000);
-    public List<String> ItemDesc = new List<String>(1000);
-    public List<String> ItemType = new List<String>(1000);
-    public List<String> ItemSeason = new List<String>(1000);
+    public List<String> ItemKey = new List<String>();
+    public List<String> ItemName = new List<String>();
+    public List<String> ItemDesc = new List<String>();
+    public List<String> ItemType = new List<String>();
+    public List<String> ItemSeason = new List<String>();
+    public List<String> ItemWeight = new List<String>();
+    public List<String> IsPoisonus = new List<String>();
     void Start()
     {
     }
