@@ -6,16 +6,17 @@ public class ItemString : MonoBehaviour {
     public string ItemString00001 = "";
     public string ItemString00002 = "";
     [SerializeField]
-    public List<Type> ItemStringTable = new List<Type>();                 // declaration
+    public List<Item> ItemStringTable = new List<Item>();                 // declaration
     public List<String> ItemKey = new List<String>();
     public List<String> ItemName = new List<String>();
     public List<String> ItemDesc = new List<String>();
     public List<String> ItemType = new List<String>();
     public List<String> ItemSeason = new List<String>();
-    public List<String> ItemWeight = new List<String>();
-    public List<String> IsPoisonus = new List<String>();
+    public List<float> ItemWeight = new List<float>();
+    public List<bool> IsPoisonus = new List<bool>();
     void Start()
     {
+
     }
     public string GetItemKey(int Key)
     {
@@ -34,4 +35,31 @@ public class ItemString : MonoBehaviour {
         return desc;
     }
 
+}
+public enum Season
+{
+    Spring,
+    Summer,
+    Autumn,
+    Winter
+}
+public class Item
+{
+    public int ItemKey;
+    public string ItemName;
+    public string ItemDesc;
+    public string ItemType;
+    public string ItemSeason;
+    public float ItemWeight;
+    public bool IsPoisonus;
+    public Item(int Key,string Name, string Desc, string Type, string Season, float Weight, bool isPoisonus)
+    {
+        ItemKey = Key;
+        ItemName = Name;
+        ItemDesc = Desc;
+        ItemType = Type;
+        ItemSeason = Season;
+        ItemWeight = Weight;
+        IsPoisonus = isPoisonus;
+    }
 }

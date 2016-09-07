@@ -7,8 +7,8 @@ public class Inventory : MonoBehaviour {
     ItemString ItemStr;
     // Inventory Management (Set Inventory Weight/Space, Earn/Delete/Convert the Items.)
     [SerializeField]
-    private int InventoryWeight = 100;
-    private int InventorySpace = 100;
+    private float InventoryMaxWeight = 100.0f;
+    private int InventoryMaxSpace = 100;
     public List<String> InventoryItemKey = new List<String>();
     public List<String> InventoryItemName = new List<String>();
     public List<String> InventoryItemDesc = new List<String>();
@@ -16,11 +16,21 @@ public class Inventory : MonoBehaviour {
     void Start()
     {
         ItemStr = GetComponent<ItemString>();
+        StartCoroutine("UpdateInventoryItems");
     }
     public void SetInventoryStatus(int weight, int space)
     {
-        InventoryWeight = weight;
-        InventorySpace = space;
+        InventoryMaxWeight = weight;
+        InventoryMaxSpace = space;
+    }
+    IEnumerator UpdateInventoryItems()
+    {
+        var wait = new WaitForSeconds(0.5f);
+        while (true)
+        {
+            
+            yield return wait;
+        }
     }
     public void AddItems(int itemkey, int itemamount)
     {
@@ -42,7 +52,7 @@ public class Inventory : MonoBehaviour {
             InventoryItemWeight.Remove(ItemStr.ItemWeight[itemkey]);
         }
     }
-    public void ExchangeItems(int passeditemkey, int resultitemkey, int passeditemamount, int resultitemamount)
+    public void ConvertItems(int passeditemkey, int resultitemkey, int passeditemamount, int resultitemamount)
     {
         for (int i = 0; i <= resultitemamount; i++)
         {

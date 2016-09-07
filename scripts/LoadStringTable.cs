@@ -257,12 +257,14 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(fields[3]);
             //Debug.Log(fields[4]);
 
-            var key = fields[0]; //Define
+            int key = int.Parse(fields[0]); //Define
             var name = fields[1]; //Define
             var desc = fields[2]; //Define
             var type = fields[3]; //Define
             var season = fields[4]; //Define
-            if (key.Contains(HeaderString) || key == "") //Ignore Header String
+            float weight = float.Parse(fields[5]);
+            bool IsPoisonus = bool.Parse(fields[6]);
+            if (name.Contains(HeaderString) || name == "") //Ignore Header String
             {
                 continue; //Go A Head
             }
@@ -275,6 +277,7 @@ public class LoadStringTable : MonoBehaviour {
 
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
+            ItemStr.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight, IsPoisonus));
         }
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
