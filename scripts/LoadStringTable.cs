@@ -14,6 +14,8 @@ public class LoadStringTable : MonoBehaviour {
     AreaString AreaStr;
     RandomDialogString RDStr;
     TalkString TalkStr;
+    LanguageLoader LangLdr;
+    SystemSettings SysSet;
     private string StringTablePath;
     private string LogPath;
     private string GeneralSettingPath;
@@ -35,11 +37,12 @@ public class LoadStringTable : MonoBehaviour {
     private string StringTable_AreaPath_HANS;
     public Text GameStartBtnTextPath;
     public Text ClickText;
-    public string language = "Japanese";
+    
     public string stringtable_UI_FileName = "stringtable_ui.csv";
     public string stringtable_CharacterMetaData_FileName = "stringtable_cmd.csv";
     public string stringtable_CharacterSpecificWords_FileName = "stringtable_csw.csv";
     public string stringtable_Item_FileName = "stringtable_item.csv";
+    public string stringtable_area_FileName = "stringtablearea.csv";
     public const string _Extension = ".csv";
     public const char _Split_Char = ',';
     string HeaderString = "~";
@@ -54,6 +57,8 @@ public class LoadStringTable : MonoBehaviour {
         RDStr = GetComponent<RandomDialogString>();
         AreaStr = GetComponent<AreaString>();
         TalkStr = GetComponent<TalkString>();
+        LangLdr = GetComponent<LanguageLoader>();
+        SysSet = GetComponent<SystemSettings>();
         DefineLoadFiles();
         LoadFiles();
         LoggingSystemInfo();
@@ -120,7 +125,7 @@ public class LoadStringTable : MonoBehaviour {
     }
     private void LoadFiles()
     {
-        switch (language)
+        switch (SysSet.language)
         {
             case "Japanese":
                 if (File.Exists(StringTable_ItemPath_JP))
@@ -137,7 +142,7 @@ public class LoadStringTable : MonoBehaviour {
                 }
                 break;
             case "English":
-                CsvLoadStringEx(StringTable_ItemPath_EN);
+                CsvLoadString(StringTable_ItemPath_EN);
                 break;
             case "Han_T":
                 CsvLoadString(StringTable_UIPath_HANT);
@@ -156,47 +161,39 @@ public class LoadStringTable : MonoBehaviour {
     }
     public void LoadSettings(string LoadPath)
     {
+        
         StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-        while (sr.Peek() >= 0)
+        Debug.Log("File Loaded");
+        string line = "";
+        while ((line = sr.ReadLine()) != null)
         {
-            string LoadRawString = sr.ReadLine();
-            if (LoadRawString.Contains("Language"))
+            if (line.Contains(HeaderString))
             {
-                string ProcessedData = LoadRawString.Replace("Language,", "");
-                language = ProcessedData;
+                continue;
             }
-            if (LoadRawString.Contains("FPS"))
+            //Debug.Log("Start to spliting.");
+            string[] fields = line.Split(_Split_Char);
+            //Debug.Log(fields[0]);
+            //Debug.Log(fields[1]);
+            //Debug.Log(fields[2]);
+            //Debug.Log(fields[3]);
+            //Debug.Log(fields[4]);
+
+            var metaid = fields[0]; //Define
+            var content = fields[1]; //Define
+
+            if (metaid.Contains(HeaderString) || metaid == "") //Ignore Header String
             {
-                string ProcessedData = LoadRawString.Replace("FPS,", "");
-                Application.targetFrameRate = int.Parse(ProcessedData);
+                continue; //Go A Head
             }
+            //Debug.Log(ItemStr.ItemKey[0]);
+            //Debug.Log(ItemStr.ItemName[0]);
+            SysSet.SSStringTable.Add(new SS(metaid, content));
         }
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
+    
     public void CsvLoadString(string LoadPath)
-    {
-        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-        while (sr.Peek() >= 0)
-        {
-            string LoadRawString = sr.ReadLine();
-            if (LoadRawString.Contains("GENERAL_WindowTitle"))
-            {
-                string ProcessedData = LoadRawString.Replace("GENERAL_WindowTitle,", "");
-
-            }
-            if (LoadRawString.Contains("GAMEMENU_Start"))
-            {
-                string ProcessedData = LoadRawString.Replace("GAMEMENU_Start,", "");
-                GameStartBtnTextPath.text = ProcessedData;
-            }
-            if (LoadRawString.Contains("GAMEMENU_End"))
-            {
-
-            }
-            Debug.Log(LoadRawString);
-        }
-
-    }
-    public void CsvLoadStringEx(string LoadPath)
     {
         StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
         Debug.Log("File Loaded");
@@ -308,6 +305,39 @@ public class LoadStringTable : MonoBehaviour {
             AreaStr.AreaRegion.Add(fields[2]);
         }
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+    }
+    public void CsvLoadLanguage(string LoadPath)
+    {
+        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+        Debug.Log("File Loaded");
+        string line = "";
+        while ((line = sr.ReadLine()) != null)
+        {
+            if (line.Contains(HeaderString))
+            {
+                continue;
+            }
+            //Debug.Log("Start to spliting.");
+            string[] fields = line.Split(_Split_Char);
+            //Debug.Log(fields[0]);
+            //Debug.Log(fields[1]);
+            //Debug.Log(fields[2]);
+            //Debug.Log(fields[3]);
+            //Debug.Log(fields[4]);
+
+            int key = int.Parse(fields[0]); //Define
+            var lang = fields[1]; //Define
+            var rcode = fields[2]; //Define
+            
+            if (lang.Contains(HeaderString) || lang == "") //Ignore Header String
+            {
+                continue; //Go A Head
+            }
+            //Debug.Log(ItemStr.ItemKey[0]);
+            //Debug.Log(ItemStr.ItemName[0]);
+            LangLdr.LanguageStringTable.Add(new LL(key, lang, rcode));
+        }
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
     public void WriteStartupLog(string WritePath, string LogContent)
     {

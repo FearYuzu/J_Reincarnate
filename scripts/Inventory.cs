@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour {
     public List<String> InventoryItemKey = new List<String>();
     public List<String> InventoryItemName = new List<String>();
     public List<String> InventoryItemDesc = new List<String>();
-    public List<String> InventoryItemWeight = new List<String>();
+    public List<float> InventoryItemWeight = new List<float>();
     void Start()
     {
         ItemStr = GetComponent<ItemString>();
