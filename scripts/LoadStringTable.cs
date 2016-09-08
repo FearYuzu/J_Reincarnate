@@ -339,6 +339,41 @@ public class LoadStringTable : MonoBehaviour {
         }
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
+    public void CsvLoadTalkString(string LoadPath)
+    {
+        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+        Debug.Log("File Loaded");
+        string line = "";
+        while ((line = sr.ReadLine()) != null)
+        {
+            if (line.Contains(HeaderString))
+            {
+                continue;
+            }
+            //Debug.Log("Start to spliting.");
+            string[] fields = line.Split(_Split_Char);
+
+            int key = int.Parse(fields[0]); //Define
+            var name = fields[1]; //Define
+            var type = fields[2]; //Define
+            var desc1 = fields[3];
+            var desc2 = fields[4];
+            var desc3 = fields[5];
+            var desc4 = fields[6];
+            var desc5 = fields[7];
+            var desc6 = fields[8];
+            var desc7 = fields[9];
+            var desc8 = fields[10];
+            var desc9 = fields[11];
+            var desc10 = fields[12];
+            if (name.Contains(HeaderString) || name == "") //Ignore Header String
+            {
+                continue; //Go A Head
+            }
+            TalkStr.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
+        }
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+    }
     public void WriteStartupLog(string WritePath, string LogContent)
     {
         StreamWriter sw = new StreamWriter(LogPath,true);
