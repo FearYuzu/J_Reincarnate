@@ -51,8 +51,9 @@ public class Item
     public string ItemType;
     public string ItemSeason;
     public float ItemWeight;
+    public string ItemPlaceIdentifier;
     public bool IsPoisonus;
-    public Item(int Key,string Name, string Desc, string Type, string Season, float Weight, bool isPoisonus)
+    public Item(int Key,string Name, string Desc, string Type, string Season, float Weight, string ItemPlaceID, bool isPoisonus)
     {
         ItemKey = Key;
         ItemName = Name;
@@ -60,6 +61,7 @@ public class Item
         ItemType = Type;
         ItemSeason = Season;
         ItemWeight = Weight;
+        ItemPlaceIdentifier = ItemPlaceID;
         IsPoisonus = isPoisonus;
     }
 }

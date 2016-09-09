@@ -260,7 +260,8 @@ public class LoadStringTable : MonoBehaviour {
             var type = fields[3]; //Define
             var season = fields[4]; //Define
             float weight = float.Parse(fields[5]);
-            bool IsPoisonus = bool.Parse(fields[6]);
+            var ItemPlaceIdentifier = fields[6];
+            bool IsPoisonus = bool.Parse(fields[7]);
             if (name.Contains(HeaderString) || name == "") //Ignore Header String
             {
                 continue; //Go A Head
@@ -274,7 +275,7 @@ public class LoadStringTable : MonoBehaviour {
 
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
-            ItemStr.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight, IsPoisonus));
+            ItemStr.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight, ,ItemPlaceIdentifier , IsPoisonus));
         }
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
