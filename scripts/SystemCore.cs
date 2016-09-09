@@ -6,10 +6,11 @@ using System.Collections.Generic;
 public class SystemCore : MonoBehaviour {
 
     ItemString ItemStr;
-    List<int> ItemDropListKey_Spring = new List<int>();
-    List<int> ItemDropListKey_Summer = new List<int>();
-    List<int> ItemDropListKey_Autumn = new List<int>();
-    List<int> ItemDropListKey_Winter = new List<int>();
+    public string GameWorldSeason = "Spring";
+    public List<int> ItemDropListKey_Spring = new List<int>();
+    public List<int> ItemDropListKey_Summer = new List<int>();
+    public List<int> ItemDropListKey_Autumn = new List<int>();
+    public List<int> ItemDropListKey_Winter = new List<int>();
 	// Use this for initialization
 	void Start () {
         ItemStr = GetComponent<ItemString>();

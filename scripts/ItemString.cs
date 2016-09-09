@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 public class ItemString : MonoBehaviour {
-    public string ItemString00001 = "";
-    public string ItemString00002 = "";
+   
     [SerializeField]
     public List<Item> ItemStringTable = new List<Item>();                 // declaration
     public List<String> ItemKey = new List<String>();
