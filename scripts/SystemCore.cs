@@ -6,7 +6,12 @@ using System.Collections.Generic;
 public class SystemCore : MonoBehaviour {
 
     ItemString ItemStr;
-    public string GameWorldSeason = "Spring";
+    public static string GameWorldSeason = "Spring";
+    public static string GameTimezone = "Noon";
+    public static string GameSaveDataPath = Application.dataPath + "/save/";
+    public static float GameWorldTime;
+    public static float ElapsedGamePlayTime;
+    public static bool IsGameStarted = false;
     public List<int> ItemDropListKey_Spring = new List<int>();
     public List<int> ItemDropListKey_Summer = new List<int>();
     public List<int> ItemDropListKey_Autumn = new List<int>();
@@ -16,10 +21,21 @@ public class SystemCore : MonoBehaviour {
         ItemStr = GetComponent<ItemString>();
 	
 	}
-	
+    enum GameWorldSeasonList
+    {
+        Spring,Summer,Autumn,Winter
+    }
+    enum GameTimezoneList
+    {
+        EarlyMorning,Morning,Noon,Evening,MidNight
+    }
 	// Update is called once per frame
 	void Update () {
-	
+        if (IsGameStarted)
+        {
+            GameWorldTime += Time.deltaTime;
+            ElapsedGamePlayTime = GameWorldTime;
+        }	
 	}
     public void ItemDropKeyGenerator()
     {
@@ -44,6 +60,15 @@ public class SystemCore : MonoBehaviour {
             
         }
     }
+    public void ItemConvertKeyGenerator()
+    {
+
+    }
+    IEnumerator StartCalculateElapsedTime()
+    {
+        return;
+    }
+
 }
 public class DropPlace
 {

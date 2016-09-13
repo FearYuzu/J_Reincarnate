@@ -190,6 +190,8 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(ItemStr.ItemName[0]);
             SysSet.SSStringTable.Add(new SS(metaid, content));
         }
+        sr.Close();
+        sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
     
@@ -277,6 +279,8 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(ItemStr.ItemName[0]);
             ItemStr.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight, ,ItemPlaceIdentifier , IsPoisonus));
         }
+        sr.Close();
+        sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
     public void CsvLoadAreaString(string LoadPath)
@@ -305,6 +309,8 @@ public class LoadStringTable : MonoBehaviour {
             AreaStr.AreaName.Add(fields[1]);
             AreaStr.AreaRegion.Add(fields[2]);
         }
+        sr.Close();
+        sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
     }
     public void CsvLoadLanguage(string LoadPath)
@@ -338,6 +344,8 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(ItemStr.ItemName[0]);
             LangLdr.LanguageStringTable.Add(new LL(key, lang, rcode));
         }
+        sr.Close();
+        sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
     public void CsvLoadTalkString(string LoadPath)
@@ -373,6 +381,8 @@ public class LoadStringTable : MonoBehaviour {
             }
             TalkStr.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
         }
+        sr.Close();
+        sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
     }
     public void WriteStartupLog(string WritePath, string LogContent)
