@@ -6,9 +6,9 @@ using System.Collections.Generic;
 public class AreaString : MonoBehaviour {
 
     [SerializeField]
-    public List<String> AreaKey = new List<String>(1000);
-    public List<String> AreaName = new List<String>(1000);
-    public List<String> AreaRegion = new List<String>(1000);
+    public static List<String> AreaKey = new List<String>(1000);
+    public static List<String> AreaName = new List<String>(1000);
+    public static List<String> AreaRegion = new List<String>(1000);
     void Start()
     {
     }

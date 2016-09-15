@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ItemString : MonoBehaviour {
    
     [SerializeField]
-    public List<Item> ItemStringTable = new List<Item>();                 // declaration
+    public static List<Item> ItemStringTable = new List<Item>();                 // declaration
     public List<String> ItemKey = new List<String>();
     public List<String> ItemName = new List<String>();
     public List<String> ItemDesc = new List<String>();
@@ -49,10 +49,10 @@ public class Item
     public string ItemDesc;
     public string ItemType;
     public string ItemSeason;
-    public float ItemWeight;
+    public double ItemWeight;
     public string ItemPlaceIdentifier;
     public bool IsPoisonus;
-    public Item(int Key,string Name, string Desc, string Type, string Season, float Weight, string ItemPlaceID, bool isPoisonus)
+    public Item(int Key,string Name, string Desc, string Type, string Season, double Weight, string ItemPlaceID, bool isPoisonus)
     {
         ItemKey = Key;
         ItemName = Name;

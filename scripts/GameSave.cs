@@ -48,7 +48,6 @@ public class GameSave : MonoBehaviour {
         GameDatabase.Add(new GameDB("PlayerRotation_Y",Player.transform.rotation.y.ToString()));
         GameDatabase.Add(new GameDB("PlayerRotation_Z",Player.transform.rotation.z.ToString()));
         GameDatabase.Add(new GameDB("ElapsedPlayTime", SystemCore.ElapsedGamePlayTime.ToString()));
-        
 
 
 

@@ -35,6 +35,7 @@ public class LoadStringTable : MonoBehaviour {
     private string StringTable_AreaPath_EN;
     private string StringTable_AreaPath_HANT;
     private string StringTable_AreaPath_HANS;
+    private string StringTable_System_JP;
     public Text GameStartBtnTextPath;
     public Text ClickText;
     
@@ -42,7 +43,8 @@ public class LoadStringTable : MonoBehaviour {
     public string stringtable_CharacterMetaData_FileName = "stringtable_cmd.csv";
     public string stringtable_CharacterSpecificWords_FileName = "stringtable_csw.csv";
     public string stringtable_Item_FileName = "stringtable_item.csv";
-    public string stringtable_area_FileName = "stringtablearea.csv";
+    public string stringtable_area_FileName = "stringtable_area.csv";
+    public string stringtable_system_FileName = "stringtable_system.csv";
     public const string _Extension = ".csv";
     public const char _Split_Char = ',';
     string HeaderString = "~";
@@ -59,9 +61,28 @@ public class LoadStringTable : MonoBehaviour {
         TalkStr = GetComponent<TalkString>();
         LangLdr = GetComponent<LanguageLoader>();
         SysSet = GetComponent<SystemSettings>();
+        StringTablePath = Application.dataPath + "/Resources/stringtable/";
+        StringTable_UIPath_JP = StringTablePath + "jp/" + stringtable_UI_FileName;
+        StringTable_UIPath_EN = StringTablePath + "en/" + stringtable_UI_FileName;
+        StringTable_UIPath_HANS = StringTablePath + "hans/" + stringtable_UI_FileName;
+        StringTable_UIPath_HANT = StringTablePath + "hant/" + stringtable_UI_FileName;
+        StringTable_UIPath_Mod1 = StringTablePath + "ext1/" + stringtable_UI_FileName;
+        StringTable_UIPath_Mod2 = StringTablePath + "ext2/" + stringtable_UI_FileName;
+        StringTable_ItemPath_JP = StringTablePath + "jp/" + stringtable_Item_FileName;
+        StringTable_ItemPath_EN = StringTablePath + "en/" + stringtable_Item_FileName;
+        StringTable_System_JP = StringTablePath + "jp/" + stringtable_system_FileName;
+
+        GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
+        LogPath = Application.dataPath + "/log/Startup.log";
         DefineLoadFiles();
-        LoadFiles();
+        Debug.Log("File Define Loaded");
+        LoadSystemDefine(StringTable_System_JP);
+        Debug.Log("System Define Loaded");
         LoggingSystemInfo();
+        Debug.Log("SystemInfo Loaded");
+        LoadFiles();
+        Debug.Log("System Loaded");
+       
 
         if (File.Exists(GeneralSettingPath))
         {
@@ -113,44 +134,33 @@ public class LoadStringTable : MonoBehaviour {
         StringTablePath = Application.dataPath + "/Resources/stringtable/";
         StringTable_UIPath_JP = StringTablePath + "jp/" + stringtable_UI_FileName;
         StringTable_UIPath_EN = StringTablePath + "en/" + stringtable_UI_FileName;
+        StringTable_AreaPath_JP = StringTablePath + "jp/" + stringtable_area_FileName;
         StringTable_UIPath_HANS = StringTablePath + "hans/" + stringtable_UI_FileName;
         StringTable_UIPath_HANT = StringTablePath + "hant/" + stringtable_UI_FileName;
         StringTable_UIPath_Mod1 = StringTablePath + "ext1/" + stringtable_UI_FileName;
         StringTable_UIPath_Mod2 = StringTablePath + "ext2/" + stringtable_UI_FileName;
         StringTable_ItemPath_JP = StringTablePath + "jp/" + stringtable_Item_FileName;
         StringTable_ItemPath_EN = StringTablePath + "en/" + stringtable_Item_FileName;
+        StringTable_System_JP = StringTablePath + "jp/" + stringtable_system_FileName;
         
         GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
         LogPath = Application.dataPath + "/log/Startup.log";
     }
     private void LoadFiles()
     {
-        switch (SysSet.language)
-        {
-            case "Japanese":
-                if (File.Exists(StringTable_ItemPath_JP))
-                {
-                    CsvLoadItemString(StringTable_ItemPath_JP);
-                    CsvLoadAreaString(StringTable_AreaPath_JP);
-
-                    WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(18) + "(" + StringTable_UIPath_JP + ")");
-                }
-                else
-                {
-                    WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(8) + SMDefine.GetSysMsgContent(29) + "(" + StringTable_UIPath_JP + ")");
-                    //QuitForSafe();
-                }
-                break;
-            case "English":
-                CsvLoadString(StringTable_ItemPath_EN);
-                break;
-            case "Han_T":
-                CsvLoadString(StringTable_UIPath_HANT);
-                break;
-            case "Han_S":
-                CsvLoadString(StringTable_UIPath_HANS);
-                break;
-        }
+        Debug.Log("ldr");
+        
+        Debug.Log("ldr_jp");
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(18) + "(" + StringTable_UIPath_JP + ")");
+        //}
+        //else
+        //{
+        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(8) + SMDefine.GetSysMsgContent(29) + "(" + StringTable_UIPath_JP + ")");
+        //QuitForSafe();
+        CsvLoadItemString(StringTable_ItemPath_JP);
+        CsvLoadAreaString(StringTable_AreaPath_JP);
+        Debug.Log(SystemSettings.language);
+        Debug.Log(ItemString.ItemStringTable[0].ItemName);
     }
     // Update is called once per frame
     void Update()
@@ -194,7 +204,35 @@ public class LoadStringTable : MonoBehaviour {
         sr = null;
         WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
     }
-    
+    public void LoadSystemDefine(string LoadPath)
+    {
+        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+        string line = "";
+        while ((line = sr.ReadLine()) != null)
+        {
+            if (line.Contains(HeaderString))
+            {
+                continue;
+            }
+            string[] fields = line.Split(_Split_Char);
+            int key = int.Parse(fields[0]);
+            var tag = fields[1];
+            var content = fields[2];
+            if (tag.Contains(HeaderString) || tag == "")
+            {
+                continue;
+            }
+            SystemMessageDefine.SMDefineTable.Add(new SysMsgDefine(key, tag, content));
+            Debug.Log(SystemMessageDefine.SMDefineTable[0].SysMessageKey);
+            
+        }
+        Debug.Log(SystemMessageDefine.SMDefineTable[1].SysMessageKey);
+        Debug.Log(SystemMessageDefine.SMDefineTable[2].SysMessageKey);
+        Debug.Log("a:"+SMDefine.GetSysMsgContent(1));
+        sr.Close();
+        sr = null;
+
+    }
     public void CsvLoadString(string LoadPath)
     {
         StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
@@ -255,15 +293,24 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(fields[2]);
             //Debug.Log(fields[3]);
             //Debug.Log(fields[4]);
-
+            string getboolvalue;
+            if (fields[7] == "True")
+            {
+                getboolvalue = bool.TrueString;
+            }
+            else
+            {
+                getboolvalue = bool.FalseString;
+            }
+            
             int key = int.Parse(fields[0]); //Define
             var name = fields[1]; //Define
             var desc = fields[2]; //Define
             var type = fields[3]; //Define
             var season = fields[4]; //Define
-            float weight = float.Parse(fields[5]);
+            double weight = double.Parse("100.1");
             var ItemPlaceIdentifier = fields[6];
-            bool IsPoisonus = bool.Parse(fields[7]);
+            bool IsPoisonus = bool.Parse(getboolvalue);
             if (name.Contains(HeaderString) || name == "") //Ignore Header String
             {
                 continue; //Go A Head
@@ -277,7 +324,7 @@ public class LoadStringTable : MonoBehaviour {
 
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
-            ItemStr.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight, ,ItemPlaceIdentifier , IsPoisonus));
+            ItemString.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight,ItemPlaceIdentifier , IsPoisonus));
         }
         sr.Close();
         sr = null;
@@ -305,13 +352,13 @@ public class LoadStringTable : MonoBehaviour {
             {
                 continue; //Go A Head
             }
-            AreaStr.AreaKey.Add(fields[0]);
-            AreaStr.AreaName.Add(fields[1]);
-            AreaStr.AreaRegion.Add(fields[2]);
+            AreaString.AreaKey.Add(fields[0]);
+            AreaString.AreaName.Add(fields[1]);
+            AreaString.AreaRegion.Add(fields[2]);
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaString.AreaKey.Count + SMDefine.GetSysMsgContent(23));
     }
     public void CsvLoadLanguage(string LoadPath)
     {
@@ -383,13 +430,15 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaStr.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaString.AreaKey.Count + SMDefine.GetSysMsgContent(23));
     }
     public void WriteStartupLog(string WritePath, string LogContent)
     {
         StreamWriter sw = new StreamWriter(LogPath,true);
+        Debug.Log("Wrote:" + LogContent);
         sw.WriteLine(LogContent);
         sw.Close();
+        
         
     }
 }

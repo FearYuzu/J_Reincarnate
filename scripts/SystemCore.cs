@@ -12,13 +12,14 @@ public class SystemCore : MonoBehaviour {
     public static float GameWorldTime;
     public static float ElapsedGamePlayTime;
     public static bool IsGameStarted = false;
-    public List<int> ItemDropListKey_Spring = new List<int>();
-    public List<int> ItemDropListKey_Summer = new List<int>();
-    public List<int> ItemDropListKey_Autumn = new List<int>();
-    public List<int> ItemDropListKey_Winter = new List<int>();
+    public static List<int> ItemDropListKey_Spring = new List<int>();
+    public static List<int> ItemDropListKey_Summer = new List<int>();
+    public static List<int> ItemDropListKey_Autumn = new List<int>();
+    public static List<int> ItemDropListKey_Winter = new List<int>();
 	// Use this for initialization
 	void Start () {
         ItemStr = GetComponent<ItemString>();
+        ItemDropKeyGenerator();
 	
 	}
     enum GameWorldSeasonList
@@ -37,25 +38,25 @@ public class SystemCore : MonoBehaviour {
             ElapsedGamePlayTime = GameWorldTime;
         }	
 	}
-    public void ItemDropKeyGenerator()
+    public static void ItemDropKeyGenerator()
     {
-        for (int i = 0; i < ItemStr.ItemStringTable.Count; i++)
+        for (int i = 0; i < ItemString.ItemStringTable.Count; i++)
         {
-            if (ItemStr.ItemStringTable[i].ItemSeason == "Spring")
+            if (ItemString.ItemStringTable[i].ItemSeason == "Spring")
             {
-                ItemDropListKey_Spring.Add(ItemStr.ItemStringTable[i].ItemKey);
+                ItemDropListKey_Spring.Add(ItemString.ItemStringTable[i].ItemKey);
             }
-            if (ItemStr.ItemStringTable[i].ItemSeason == "Summer")
+            if (ItemString.ItemStringTable[i].ItemSeason == "Summer")
             {
-                ItemDropListKey_Summer.Add(ItemStr.ItemStringTable[i].ItemKey);
+                ItemDropListKey_Summer.Add(ItemString.ItemStringTable[i].ItemKey);
             }
-            if (ItemStr.ItemStringTable[i].ItemSeason == "Autumn")
+            if (ItemString.ItemStringTable[i].ItemSeason == "Autumn")
             {
-                ItemDropListKey_Autumn.Add(ItemStr.ItemStringTable[i].ItemKey);
+                ItemDropListKey_Autumn.Add(ItemString.ItemStringTable[i].ItemKey);
             }
-            if (ItemStr.ItemStringTable[i].ItemSeason == "Winter")
+            if (ItemString.ItemStringTable[i].ItemSeason == "Winter")
             {
-                ItemDropListKey_Winter.Add(ItemStr.ItemStringTable[i].ItemKey);
+                ItemDropListKey_Winter.Add(ItemString.ItemStringTable[i].ItemKey);
             }
             
         }
@@ -66,7 +67,7 @@ public class SystemCore : MonoBehaviour {
     }
     IEnumerator StartCalculateElapsedTime()
     {
-        return;
+        yield return new WaitForSeconds(1);
     }
 
 }

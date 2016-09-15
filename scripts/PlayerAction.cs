@@ -21,9 +21,9 @@ public class PlayerAction : MonoBehaviour {
     {
         if (col.gameObject.tag == "Plexus")
         {
-            if (SysCore.GameWorldSeason == "Spring")
+            if (SystemCore.GameWorldSeason == "Spring")
             {
-                var ItemKey = Random.Range(1,SysCore.ItemDropListKey_Spring.Count);
+                var ItemKey = Random.Range(1,SystemCore.ItemDropListKey_Spring.Count);
                 var Amount = Random.Range(1, 3);
                 _Inventory.AddItems(ItemKey, Amount);
             }
@@ -36,4 +36,5 @@ public class PlayerAction : MonoBehaviour {
             _Inventory.AddItems(ItemKey, Amount);
         }
     }
+    
 }
