@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class AreaString : MonoBehaviour {
 
     [SerializeField]
+    public static List<Area> AreaStringTable = new List<Area>();
     public static List<String> AreaKey = new List<String>(1000);
     public static List<String> AreaName = new List<String>(1000);
     public static List<String> AreaRegion = new List<String>(1000);
@@ -28,4 +29,17 @@ public class AreaString : MonoBehaviour {
         return region;
     }
 
+}
+public class Area
+{
+    public int AreaKey;
+    public string AreaName;
+    public string Region;
+    
+    public Area(int Key, string Name, string region)
+    {
+        AreaKey = Key;
+        AreaName = Name;
+        Region = region;
+    }
 }

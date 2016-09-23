@@ -9,6 +9,7 @@ public class DebugSystem : MonoBehaviour {
     //Debugging System such as call loaded strings, etc.
     
     public Dropdown dropdown;
+    public Dropdown dropdown1;
     public InputField input;
     public Text result;
     public Text result_item;
@@ -18,11 +19,12 @@ public class DebugSystem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         dropdown = GameObject.Find("Canvas/Debugging/SelectStringType").GetComponent<Dropdown>();
-        dropdown = GameObject.Find("Canvas/Debugging/SelectSeason").GetComponent<Dropdown>();
+        dropdown1 = GameObject.Find("Canvas/Debugging/SelectSeason").GetComponent<Dropdown>();
         input = GameObject.Find("Canvas/Debugging/Input").GetComponent<InputField>();
         result = GameObject.Find("Canvas/Debugging/Result").GetComponent<Text>();
         result_item = GameObject.Find("Canvas/Debugging/Result_Item").GetComponent<Text>();
         result_desc = GameObject.Find("Canvas/Debugging/Result_desc").GetComponent<Text>();
+        
 	}
 	
 	// Update is called once per frame
@@ -105,19 +107,23 @@ public class DebugSystem : MonoBehaviour {
     }
     public void SeasonSelect()
     {
-        if (dropdown.captionText.text == "Spring")
+        if (dropdown1.captionText.text == "Any")
         {
-            stringtype = "Spring";
+            stringseason = "Any";
+        }
+        if (dropdown1.captionText.text == "Spring")
+        {
+            stringseason = "Spring";
             Debug.Log("Set to Type:Area");
         }
-        if (dropdown.captionText.text == "Summer")
+        if (dropdown1.captionText.text == "Summer")
         {
-            stringtype = "Summer";
+            stringseason = "Summer";
             Debug.Log("Set to Type:Item");
         }
-        if (dropdown.captionText.text == "Autumn")
+        if (dropdown1.captionText.text == "Autumn")
         {
-            stringtype = "Autumn";
+            stringseason = "Autumn";
             Debug.Log("Set to Type:System");
         }
     }
@@ -131,6 +137,15 @@ public class DebugSystem : MonoBehaviour {
             Debug.Log(ItemString.ItemStringTable.Count);
             var Amount = UnityEngine.Random.Range(1, 3);
             result_item.text = ItemKey.ToString();
+            result_desc.text = Amount.ToString();
+        }
+        if (stringseason == "Any")
+        {
+            
+            var Itemkey = UnityEngine.Random.Range(1, SystemCore.ItemDropListKey_Any.Count);
+            var Amount = UnityEngine.Random.Range(1, 4);
+            Debug.Log(SystemCore.ItemDropListKey_Any.Count);
+            result_item.text = Itemkey.ToString();
             result_desc.text = Amount.ToString();
         }
     }

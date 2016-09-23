@@ -233,61 +233,20 @@ public class LoadStringTable : MonoBehaviour {
         sr = null;
 
     }
-    public void CsvLoadString(string LoadPath)
-    {
-        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-        Debug.Log("File Loaded");
-        int counter = 0;
-        string line = "";
-        while((line = sr.ReadLine()) != null)
-        {
-            if (line.Contains(HeaderString))
-            {
-                continue;
-            }
-            //Debug.Log("Start to spliting.");
-            string[] fields = line.Split(_Split_Char);
-            //Debug.Log(fields[0]);
-            //Debug.Log(fields[1]);
-            //Debug.Log(fields[2]);
-            //Debug.Log(fields[3]);
-            //Debug.Log(fields[4]);
-            
-            var key = fields[0]; //Define
-            var name = fields[1]; //Define
-            var desc = fields[2]; //Define
-            var type = fields[3]; //Define
-            var season = fields[4]; //Define
-            if(key.Contains(HeaderString) || key == "") //Ignore Header String
-            {
-                    continue; //Go A Head
-            }
-            ItemStr.ItemKey.Add(fields[0]); //Write ItemKey to ItemKeyList.
-            //Debug.Log("Key Added.");
-            ItemStr.ItemName.Add(fields[1]); //Write ItemName to ItemNameList.
-            ItemStr.ItemDesc.Add(fields[2]); //Write ItemDesc to ItemDescList.
-            ItemStr.ItemType.Add(fields[3]); //Write ItemType to ItemTypeList.
-            ItemStr.ItemSeason.Add(fields[4]); //Write ItemSeason to ItemSeasonList.
-            
-            //Debug.Log(ItemStr.ItemKey[0]);
-            //Debug.Log(ItemStr.ItemName[0]);
-        }
-        
-    }
     public void CsvLoadItemString(string LoadPath)
     {
         StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
         Debug.Log("File Loaded");
         int counter = 0;
         string line = "";
-        while ((line = sr.ReadLine()) != null)
+        while ((line = sr.ReadLine()) != null) //Read Until End of Lines. 
         {
             if (line.Contains(HeaderString))
             {
-                continue;
+                continue; //Ignore HeaderString, then go a head!
             }
             //Debug.Log("Start to spliting.");
-            string[] fields = line.Split(_Split_Char);
+            string[] fields = line.Split(_Split_Char); //Split the line data.
             //Debug.Log(fields[0]);
             //Debug.Log(fields[1]);
             //Debug.Log(fields[2]);
@@ -315,16 +274,11 @@ public class LoadStringTable : MonoBehaviour {
             {
                 continue; //Go A Head
             }
-            ItemStr.ItemKey.Add(fields[0]); //Write ItemKey to ItemKeyList.
-            //Debug.Log("Key Added.");
-            ItemStr.ItemName.Add(fields[1]); //Write ItemName to ItemNameList.
-            ItemStr.ItemDesc.Add(fields[2]); //Write ItemDesc to ItemDescList.
-            ItemStr.ItemType.Add(fields[3]); //Write ItemType to ItemTypeList.
-            ItemStr.ItemSeason.Add(fields[4]); //Write ItemSeason to ItemSeasonList.
+            
 
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
-            ItemString.ItemStringTable.Add(new Item(key, fields[1], fields[2], fields[3], fields[4], weight,ItemPlaceIdentifier , IsPoisonus));
+            ItemString.ItemStringTable.Add(new Item(key, name, desc, type, season, weight,ItemPlaceIdentifier , IsPoisonus)); //Write Item Elements to the In-game ItemDB. 
         }
         sr.Close();
         sr = null;
