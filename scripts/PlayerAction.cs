@@ -8,8 +8,8 @@ public class PlayerAction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _Inventory = GetComponent<Inventory>();
-        SysCore = GameObject.Find("EventSystem").GetComponent<SystemCore>();
-        ItemStr = GameObject.Find("EventSystem").GetComponent<ItemString>();
+
+
 	
 	}
 	
@@ -25,7 +25,7 @@ public class PlayerAction : MonoBehaviour {
             {
                 var ItemKey = Random.Range(1,SystemCore.ItemDropListKey_Spring.Count);
                 var Amount = Random.Range(1, 3);
-                _Inventory.AddItems(ItemKey, Amount);
+                Inventory.AddItems(ItemKey, Amount);
             }
             
         }
@@ -33,7 +33,7 @@ public class PlayerAction : MonoBehaviour {
         {
             var ItemKey = Random.Range(1, 50);
             var Amount = Random.Range(1, 3);
-            _Inventory.AddItems(ItemKey, Amount);
+            Inventory.AddItems(ItemKey, Amount);
         }
     }
     

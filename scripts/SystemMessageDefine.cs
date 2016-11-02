@@ -6,14 +6,18 @@ using System.Collections.Generic;
 public class SystemMessageDefine : MonoBehaviour {
     [SerializeField]
     public static List<SysMsgDefine> SMDefineTable = new List<SysMsgDefine>();
-    public static List<String> SysMsgKey = new List<String>(1000);
-    public static List<String> SysMsgTag = new List<String>(1000);
-    public static List<String> Content = new List<String>(1000);
-    
-    public string GetSysMsgContent(int Key)
+    string ReturnedContent;
+    public string GetSysMsg(string msgtag)
     {
-        string content = SMDefineTable[Key].Content.Replace("\"","");
-        return content;
+        for(int i = 0; i < SMDefineTable.Count; i++)
+        {
+            if(SMDefineTable[i].SysMessageTag.Contains(msgtag))
+            {
+                ReturnedContent = SMDefineTable[i].Content;
+            }
+            
+        }
+        return ReturnedContent;
     }
 
 

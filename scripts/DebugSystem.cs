@@ -32,7 +32,8 @@ public class DebugSystem : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             StartQuery();
-            CallRamdomizedItemKey();
+            CallRamdomizedItemKey(); 
+          
         }
 	
 	}
@@ -148,6 +149,11 @@ public class DebugSystem : MonoBehaviour {
             result_item.text = Itemkey.ToString();
             result_desc.text = Amount.ToString();
         }
+    }
+    public void CallSavedata()
+    {
+        Debug.Log("Called");
+        GameSave.SaveGame();
     }
 
 }

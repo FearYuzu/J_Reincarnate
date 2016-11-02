@@ -87,12 +87,12 @@ public class LoadStringTable : MonoBehaviour {
         if (File.Exists(GeneralSettingPath))
         {
             LoadSettings(GeneralSettingPath);
-            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(18) + "(" + GeneralSettingPath + ")");
+            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + GeneralSettingPath + ")");
         }
         else
         {
             DisableGameObject();
-            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(8) + SMDefine.GetSysMsgContent(29) + "(" + GeneralSettingPath + ")");
+            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("FatalError_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "(" + GeneralSettingPath + ")");
             //QuitForSafe();
         }
         //GameStartBtnTextPath = GameObject.Find(Define.GameMenu_StartBtnText).GetComponent<Text>();
@@ -104,7 +104,7 @@ public class LoadStringTable : MonoBehaviour {
     }
     public void QuitForSafe()
     {
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(9) + SMDefine.GetSysMsgContent(30));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("Terminate_Reason001"));
         Application.Quit();
     }
     public void LoggingSystemInfo()
@@ -112,17 +112,17 @@ public class LoadStringTable : MonoBehaviour {
         WriteStartupLog(LogPath, "--------------------------------------------------------------------");
         WriteStartupLog(LogPath, "                Game System Startup Log ");
         WriteStartupLog(LogPath, "--------------------------------------------------------------------");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(5) + SMDefine.GetSysMsgContent(0) + " (Ver." + SMDefine.GetSysMsgContent(1) + " | Rev." + SMDefine.GetSysMsgContent(2) + " | Type:" + SMDefine.GetSysMsgContent(3) + ")");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(6) + SMDefine.GetSysMsgContent(19));
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(20));
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(11) + SystemInfo.operatingSystem);
-        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.DN_Tag + SystemInfo.deviceName);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(15) + SystemInfo.processorType);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(17) + SystemInfo.systemMemorySize + "MB");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(13) + SystemInfo.graphicsDeviceName);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(14) + SystemInfo.graphicsDeviceVendor);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(16) + SystemInfo.graphicsMemorySize + "MB");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(21));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Welcome_Tag") + SMDefine.GetSysMsg("Game_Title") + " (Ver." + SMDefine.GetSysMsg("Game_Version") + " | Rev." + SMDefine.GetSysMsg("Game_Revision") + " | Type:" + SMDefine.GetSysMsg("Game_ReleaseType") + ")");
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Started_Tag") + SMDefine.GetSysMsg("OperationMsg_002"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_003"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OS_Tag") + SystemInfo.operatingSystem);
+        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.DN_Tag + SystemInfo.deviceName);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("Processor_Tag") + SystemInfo.processorType);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("SMS_Tag") + SystemInfo.systemMemorySize + "MB");
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("GDN_Tag") + SystemInfo.graphicsDeviceName);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("GDV_Tag") + SystemInfo.graphicsDeviceVendor);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("GMS_Tag") + SystemInfo.graphicsMemorySize + "MB");
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_004"));
 
     }
     public void DisableGameObject()
@@ -151,11 +151,11 @@ public class LoadStringTable : MonoBehaviour {
         Debug.Log("ldr");
         
         Debug.Log("ldr_jp");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + SMDefine.GetSysMsgContent(18) + "(" + StringTable_UIPath_JP + ")");
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_UIPath_JP + ")");
         //}
         //else
         //{
-        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(8) + SMDefine.GetSysMsgContent(29) + "(" + StringTable_UIPath_JP + ")");
+        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("FatalError_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "(" + StringTable_UIPath_JP + ")");
         //QuitForSafe();
         CsvLoadItemString(StringTable_ItemPath_JP);
         CsvLoadAreaString(StringTable_AreaPath_JP);
@@ -187,7 +187,7 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(fields[1]);
             //Debug.Log(fields[2]);
             //Debug.Log(fields[3]);
-            //Debug.Log(fields[4]);
+            //Debug.Log(fields["Space_Tag"]);
 
             var metaid = fields[0]; //Define
             var content = fields[1]; //Define
@@ -198,11 +198,19 @@ public class LoadStringTable : MonoBehaviour {
             }
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
-            SysSet.SSStringTable.Add(new SS(metaid, content));
+            try
+            {
+                SysSet.SSStringTable.Add(new SS(metaid, content));
+            }
+            catch (NullReferenceException e)
+            {
+                WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001"));
+                QuitForSafe();
+            }
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
     }
     public void LoadSystemDefine(string LoadPath)
     {
@@ -228,7 +236,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         Debug.Log(SystemMessageDefine.SMDefineTable[1].SysMessageKey);
         Debug.Log(SystemMessageDefine.SMDefineTable[2].SysMessageKey);
-        Debug.Log("a:"+SMDefine.GetSysMsgContent(1));
+        //Debug.Log("a:"+SMDefine.GetSysMsg("Game_Version"));
         sr.Close();
         sr = null;
 
@@ -243,7 +251,7 @@ public class LoadStringTable : MonoBehaviour {
         {
             if (line.Contains(HeaderString))
             {
-                continue; //Ignore HeaderString, then go a head!
+                continue; //Ignore Strings that contains HeaderString, then go a head!
             }
             //Debug.Log("Start to spliting.");
             string[] fields = line.Split(_Split_Char); //Split the line data.
@@ -251,7 +259,7 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(fields[1]);
             //Debug.Log(fields[2]);
             //Debug.Log(fields[3]);
-            //Debug.Log(fields[4]);
+            //Debug.Log(fields["Space_Tag"]);
             string getboolvalue;
             if (fields[7] == "True")
             {
@@ -270,9 +278,9 @@ public class LoadStringTable : MonoBehaviour {
             double weight = double.Parse("100.1");
             var ItemPlaceIdentifier = fields[6];
             bool IsPoisonus = bool.Parse(getboolvalue);
-            if (name.Contains(HeaderString) || name == "") //Ignore Header String
+            if (name.Contains(HeaderString) || name == "") 
             {
-                continue; //Go A Head
+                continue; //Ignore Strings that contains HeaderString, then go a head!
             }
             
 
@@ -282,7 +290,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
     }
     public void CsvLoadAreaString(string LoadPath)
     {
@@ -302,9 +310,9 @@ public class LoadStringTable : MonoBehaviour {
             var key = fields[0]; //Define
             var name = fields[1]; //Define
             var region = fields[2]; //Define
-            if (key.Contains(HeaderString) || key == "") //Ignore Header String
+            if (key.Contains(HeaderString) || key == "") 
             {
-                continue; //Go A Head
+                continue; //Ignore Strings that contains HeaderString, then go a head!
             }
             AreaString.AreaKey.Add(fields[0]);
             AreaString.AreaName.Add(fields[1]);
@@ -312,7 +320,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaString.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + AreaString.AreaKey.Count + SMDefine.GetSysMsg("OperationMsg_AreaStrLoaded"));
     }
     public void CsvLoadLanguage(string LoadPath)
     {
@@ -331,15 +339,15 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log(fields[1]);
             //Debug.Log(fields[2]);
             //Debug.Log(fields[3]);
-            //Debug.Log(fields[4]);
+            //Debug.Log(fields["Space_Tag"]);
 
             int key = int.Parse(fields[0]); //Define
             var lang = fields[1]; //Define
             var rcode = fields[2]; //Define
             
-            if (lang.Contains(HeaderString) || lang == "") //Ignore Header String
+            if (lang.Contains(HeaderString) || lang == "") 
             {
-                continue; //Go A Head
+                continue; //Ignore Strings that contains HeaderString, then go a head!
             }
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
@@ -347,7 +355,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + ItemStr.ItemKey.Count + SMDefine.GetSysMsgContent(22));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
     }
     public void CsvLoadTalkString(string LoadPath)
     {
@@ -376,15 +384,15 @@ public class LoadStringTable : MonoBehaviour {
             var desc8 = fields[10];
             var desc9 = fields[11];
             var desc10 = fields[12];
-            if (name.Contains(HeaderString) || name == "") //Ignore Header String
+            if (name.Contains(HeaderString) || name == "") 
             {
-                continue; //Go A Head
+                continue; //Ignore Strings that contains HeaderString, then go a head!
             }
             TalkStr.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsgContent(4) + SMDefine.GetSysMsgContent(7) + AreaString.AreaKey.Count + SMDefine.GetSysMsgContent(23));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + AreaString.AreaKey.Count + SMDefine.GetSysMsg("OperationMsg_AreaStrLoaded"));
     }
     public void WriteStartupLog(string WritePath, string LogContent)
     {

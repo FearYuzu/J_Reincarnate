@@ -7,25 +7,32 @@ using System.Security.Cryptography;
 using System.Collections.Generic;
 
 public class GameSave : MonoBehaviour {
-    private string SaveFileNamePrefix = "Save";
-    private int SaveFileNameSerial = 001;
-    private string SaveFileExtension = ".sav";
-    private string SaveFileName;
-    GameObject Player = GameObject.Find("Player");
+    private static string SaveFileNamePrefix = "Save";
+    private static int SaveFileNameSerial = 001;
+    private static string SaveFileExtension = ".sav";
+    private static string SaveFileName;
+    static GameObject Player;
     public const string _Split_Char = "::";
-    public List<GameDB> GameDatabase = new List<GameDB>();
+    public static List<GameDB> GameDatabase = new List<GameDB>();
 	// Use this for initialization
 	void Start () {
-       
+        Player = GameObject.Find("Player");
         SaveFileName = SystemCore.GameSaveDataPath + SaveFileNamePrefix + SaveFileNameSerial + SaveFileExtension;
 	
 	}
-    public void SaveGame()
+    public static void SaveGame()
     {
+        Debug.Log("Save Start");
         if(File.Exists(SaveFileName)){
             SaveFileNameSerial++;
             SaveFileName = SystemCore.GameSaveDataPath + SaveFileNamePrefix + SaveFileNameSerial + SaveFileExtension;
+            File.Create(SaveFileName).Close();
         }
+        Debug.Log("Create:" + SaveFileName);
+        File.Create(SaveFileName).Close();
+        
+        SaveFileName = SystemCore.GameSaveDataPath + SaveFileNamePrefix + SaveFileNameSerial + SaveFileExtension;
+
         StreamWriter sw = new StreamWriter(SaveFileName,true);
         DataCollection();
 
@@ -36,10 +43,11 @@ public class GameSave : MonoBehaviour {
         }
         sw.Close();
         sw = null;
+        GameDatabase = null;
         
        
     }
-    public void DataCollection()
+    public static void DataCollection()
     {
         GameDatabase.Add(new GameDB("PlayerPosition_X",Player.transform.position.x.ToString()));
         GameDatabase.Add(new GameDB("PlayerPosition_Y", Player.transform.position.y.ToString()));
@@ -48,6 +56,17 @@ public class GameSave : MonoBehaviour {
         GameDatabase.Add(new GameDB("PlayerRotation_Y",Player.transform.rotation.y.ToString()));
         GameDatabase.Add(new GameDB("PlayerRotation_Z",Player.transform.rotation.z.ToString()));
         GameDatabase.Add(new GameDB("ElapsedPlayTime", SystemCore.ElapsedGamePlayTime.ToString()));
+        GameDatabase.Add(new GameDB("PlayerWorldView", SystemCore.GameWorldView));
+        GameDatabase.Add(new GameDB("PlayerSanity", PlayerStats.Sanity.ToString()));
+        GameDatabase.Add(new GameDB("PlayerHealth", PlayerStats.health.ToString()));
+        GameDatabase.Add(new GameDB("PlayerAdaptationRate", PlayerStats.AdaptationRate.ToString()));
+        GameDatabase.Add(new GameDB("PlayerMighty", PlayerStats.Mighty.ToString()));
+        GameDatabase.Add(new GameDB("PlayerStamina", PlayerStats.Stamina.ToString()));
+        GameDatabase.Add(new GameDB("PlayerViralCap", PlayerStats.VitalCapacity.ToString()));
+        GameDatabase.Add(new GameDB("PlayerEyeSight", PlayerStats.EyeSight.ToString()));
+        GameDatabase.Add(new GameDB("isSurviveInstinct", PlayerStats.SurviveInstinct.ToString()));
+
+
 
 
 

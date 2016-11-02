@@ -10,8 +10,8 @@ public class SystemCore : MonoBehaviour {
     public static string GameSaveDataPath;
     public static float GameWorldTime;
     public static float ElapsedGamePlayTime;
+    public static string GameWorldView = "N/A";
     public static bool IsGameStarted = false;
-   
     public static List<int> ItemDropListKey_Spring = new List<int>();
     public static List<int> ItemDropListKey_Summer = new List<int>();
     public static List<int> ItemDropListKey_Autumn = new List<int>();
@@ -21,6 +21,7 @@ public class SystemCore : MonoBehaviour {
 	void Start () {
         GameSaveDataPath = Application.dataPath + "/save/";
         ItemDropKeyGenerator();
+        Cursor.visible = true;
 	
 	}
     enum GameWorldSeasonList
@@ -37,8 +38,14 @@ public class SystemCore : MonoBehaviour {
         {
             GameWorldTime += Time.deltaTime;
             ElapsedGamePlayTime = GameWorldTime;
-        }	
+        }
+       
 	}
+    public void CallSavedata()
+    {
+        Debug.Log("called");
+        GameSave.SaveGame();
+    }
     public static void ItemDropKeyGenerator()
     {
         for (int i = 0; i < ItemString.ItemStringTable.Count; i++)
