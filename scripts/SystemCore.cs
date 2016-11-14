@@ -40,6 +40,7 @@ public class SystemCore : MonoBehaviour {
             ElapsedGamePlayTime = GameWorldTime;
         }
        
+       
 	}
     public void CallSavedata()
     {

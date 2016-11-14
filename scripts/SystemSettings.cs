@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SystemSettings : MonoBehaviour {
-    public List<SS> SSStringTable = new List<SS>();
+    public static List<SS> SSStringTable = new List<SS>();
     public static string language = "Japanese";
     int res_w = 1920;
     int res_h = 1080;

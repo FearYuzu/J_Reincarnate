@@ -36,6 +36,7 @@ public class LoadStringTable : MonoBehaviour {
     private string StringTable_AreaPath_HANT;
     private string StringTable_AreaPath_HANS;
     private string StringTable_System_JP;
+    private string StringTable_TalkPath_JP;
     public Text GameStartBtnTextPath;
     public Text ClickText;
     
@@ -45,6 +46,7 @@ public class LoadStringTable : MonoBehaviour {
     public string stringtable_Item_FileName = "stringtable_item.csv";
     public string stringtable_area_FileName = "stringtable_area.csv";
     public string stringtable_system_FileName = "stringtable_system.csv";
+    public string stringtable_talk_FileName = "stringtable_talk.csv";
     public const string _Extension = ".csv";
     public const char _Split_Char = ',';
     string HeaderString = "~";
@@ -74,27 +76,31 @@ public class LoadStringTable : MonoBehaviour {
 
         GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
         LogPath = Application.dataPath + "/log/Startup.log";
+        if (!Directory.Exists(Application.dataPath + "/log/"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/log/");
+        }
+        if (!File.Exists(LogPath))
+        {
+            File.Create(LogPath).Close();
+        }
         DefineLoadFiles();
-        Debug.Log("File Define Loaded");
+        //Debug.Log("File Define Loaded");
         LoadSystemDefine(StringTable_System_JP);
-        Debug.Log("System Define Loaded");
+        //Debug.Log("System Define Loaded");
         LoggingSystemInfo();
-        Debug.Log("SystemInfo Loaded");
+        //Debug.Log("SystemInfo Loaded");
         LoadFiles();
-        Debug.Log("System Loaded");
-       
+        //Debug.Log("System Loaded");
 
+        Debug.Log(GeneralSettingPath);
         if (File.Exists(GeneralSettingPath))
         {
+            Debug.Log("aaa");
             LoadSettings(GeneralSettingPath);
             WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + GeneralSettingPath + ")");
         }
-        else
-        {
-            DisableGameObject();
-            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("FatalError_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "(" + GeneralSettingPath + ")");
-            //QuitForSafe();
-        }
+       
         //GameStartBtnTextPath = GameObject.Find(Define.GameMenu_StartBtnText).GetComponent<Text>();
         //ClickText = GameObject.Find(Define.GameMenu_ClickText).GetComponent<Text>();
         
@@ -104,7 +110,7 @@ public class LoadStringTable : MonoBehaviour {
     }
     public void QuitForSafe()
     {
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("Terminate_Reason001"));
+        //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("Terminate_Reason001"));
         Application.Quit();
     }
     public void LoggingSystemInfo()
@@ -142,7 +148,7 @@ public class LoadStringTable : MonoBehaviour {
         StringTable_ItemPath_JP = StringTablePath + "jp/" + stringtable_Item_FileName;
         StringTable_ItemPath_EN = StringTablePath + "en/" + stringtable_Item_FileName;
         StringTable_System_JP = StringTablePath + "jp/" + stringtable_system_FileName;
-        
+        StringTable_TalkPath_JP = StringTablePath + "jp/" + stringtable_talk_FileName;
         GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
         LogPath = Application.dataPath + "/log/Startup.log";
     }
@@ -151,14 +157,21 @@ public class LoadStringTable : MonoBehaviour {
         Debug.Log("ldr");
         
         Debug.Log("ldr_jp");
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_UIPath_JP + ")");
+        
         //}
         //else
         //{
         //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("FatalError_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "(" + StringTable_UIPath_JP + ")");
         //QuitForSafe();
         CsvLoadItemString(StringTable_ItemPath_JP);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_ItemPath_JP + ")");
         CsvLoadAreaString(StringTable_AreaPath_JP);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_AreaPath_JP + ")");
+        CsvLoadUIString(StringTable_UIPath_JP);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_UIPath_JP + ")");
+        CsvLoadTalkString(StringTable_TalkPath_JP);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_TalkPath_JP + ")");
+
         Debug.Log(SystemSettings.language);
         Debug.Log(ItemString.ItemStringTable[0].ItemName);
     }
@@ -198,19 +211,18 @@ public class LoadStringTable : MonoBehaviour {
             }
             //Debug.Log(ItemStr.ItemKey[0]);
             //Debug.Log(ItemStr.ItemName[0]);
-            try
+           try
             {
-                SysSet.SSStringTable.Add(new SS(metaid, content));
+                SystemSettings.SSStringTable.Add(new SS(metaid, content));
             }
             catch (NullReferenceException e)
             {
-                WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001"));
+                WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Terminate_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "("+LoadPath+")");
                 QuitForSafe();
             }
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
     }
     public void LoadSystemDefine(string LoadPath)
     {
@@ -290,7 +302,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemString.ItemStringTable.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
     }
     public void CsvLoadAreaString(string LoadPath)
     {
@@ -307,20 +319,38 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log("Start to spliting.");
             string[] fields = line.Split(_Split_Char);
 
-            var key = fields[0]; //Define
+            var key = int.Parse(fields[0]); //Define
             var name = fields[1]; //Define
             var region = fields[2]; //Define
-            if (key.Contains(HeaderString) || key == "") 
+            if (name.Contains(HeaderString) || name == "") 
             {
                 continue; //Ignore Strings that contains HeaderString, then go a head!
             }
-            AreaString.AreaKey.Add(fields[0]);
-            AreaString.AreaName.Add(fields[1]);
-            AreaString.AreaRegion.Add(fields[2]);
+            AreaString.AreaStringTable.Add(new Area(key,name,region));
+            
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + AreaString.AreaKey.Count + SMDefine.GetSysMsg("OperationMsg_AreaStrLoaded"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + AreaString.AreaStringTable.Count + SMDefine.GetSysMsg("OperationMsg_AreaStrLoaded"));
+    }
+    public void CsvLoadUIString(string LoadPath)
+    {
+        StreamReader sr = new StreamReader(new FileStream(LoadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+        string line = "";
+        while ((line = sr.ReadLine()) != null)
+        {
+            if (line.Contains(HeaderString))
+            {
+                continue;
+            }
+            string[] fields = line.Split(_Split_Char);
+            var UIKey = fields[0];
+            var Str = fields[1];
+            UIString.UIStringTable.Add(new UI(UIKey, Str));
+        }
+        sr.Close();
+        sr = null;
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + UIString.UIStringTable.Count + SMDefine.GetSysMsg("OperationMsg_UIStrLoaded"));
     }
     public void CsvLoadLanguage(string LoadPath)
     {
@@ -355,7 +385,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_ItemStrLoaded"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + ItemStr.ItemKey.Count + SMDefine.GetSysMsg("OperationMsg_LangStrLoaded"));
     }
     public void CsvLoadTalkString(string LoadPath)
     {
@@ -371,7 +401,7 @@ public class LoadStringTable : MonoBehaviour {
             //Debug.Log("Start to spliting.");
             string[] fields = line.Split(_Split_Char);
 
-            int key = int.Parse(fields[0]); //Define
+            var key = fields[0]; //Define
             var name = fields[1]; //Define
             var type = fields[2]; //Define
             var desc1 = fields[3];
@@ -388,11 +418,11 @@ public class LoadStringTable : MonoBehaviour {
             {
                 continue; //Ignore Strings that contains HeaderString, then go a head!
             }
-            TalkStr.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
+            TalkString.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
         }
         sr.Close();
         sr = null;
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + AreaString.AreaKey.Count + SMDefine.GetSysMsg("OperationMsg_AreaStrLoaded"));
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + TalkString.TalkStringTable.Count + SMDefine.GetSysMsg("OperationMsg_TalkStrLoaded"));
     }
     public void WriteStartupLog(string WritePath, string LogContent)
     {

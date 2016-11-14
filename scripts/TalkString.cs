@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class TalkString : MonoBehaviour {
     [SerializeField]
-    public List<Talk> TalkStringTable = new List<Talk>();
+    public static List<Talk> TalkStringTable = new List<Talk>();
     public List<String> TalkKey = new List<String>(1000);
     public List<String> TalkNPCName = new List<String>(1000);
     public List<String> TalkDesc1 = new List<String>(1000);
@@ -21,7 +21,7 @@ public class TalkString : MonoBehaviour {
 }
 public class Talk
 {
-    public int Key;
+    public string Key;
     public string NPCName;
     public string NPCType;
     public string Desc1;
@@ -35,7 +35,7 @@ public class Talk
     public string Desc9;
     public string Desc10;
 
-    public Talk(int _Key, string _NPCName, string _NPCType, string _Desc1, string _Desc2, string _Desc3, string _Desc4, string _Desc5, string _Desc6, string _Desc7, string _Desc8, string _Desc9, string _Desc10)
+    public Talk(string _Key, string _NPCName, string _NPCType, string _Desc1, string _Desc2, string _Desc3, string _Desc4, string _Desc5, string _Desc6, string _Desc7, string _Desc8, string _Desc9, string _Desc10)
     {
         Key = _Key;
         NPCName = _NPCName;

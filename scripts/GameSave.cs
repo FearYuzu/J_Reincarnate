@@ -18,6 +18,7 @@ public class GameSave : MonoBehaviour {
 	void Start () {
         Player = GameObject.Find("Player");
         SaveFileName = SystemCore.GameSaveDataPath + SaveFileNamePrefix + SaveFileNameSerial + SaveFileExtension;
+        SaveGame();
 	
 	}
     public static void SaveGame()
@@ -49,6 +50,7 @@ public class GameSave : MonoBehaviour {
     }
     public static void DataCollection()
     {
+        Debug.Log("Data Collecting...");
         GameDatabase.Add(new GameDB("PlayerPosition_X",Player.transform.position.x.ToString()));
         GameDatabase.Add(new GameDB("PlayerPosition_Y", Player.transform.position.y.ToString()));
         GameDatabase.Add(new GameDB("PlayerPosition_Z",Player.transform.position.z.ToString()));
