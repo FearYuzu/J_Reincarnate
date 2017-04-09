@@ -67,6 +67,7 @@ public class GameSave : MonoBehaviour {
         GameDatabase.Add(new GameDB("PlayerViralCap", PlayerStats.VitalCapacity.ToString()));
         GameDatabase.Add(new GameDB("PlayerEyeSight", PlayerStats.EyeSight.ToString()));
         GameDatabase.Add(new GameDB("isSurviveInstinct", PlayerStats.SurviveInstinct.ToString()));
+        
 
 
 

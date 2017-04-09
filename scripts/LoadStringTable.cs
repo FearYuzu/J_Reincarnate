@@ -16,27 +16,8 @@ public class LoadStringTable : MonoBehaviour {
     TalkString TalkStr;
     LanguageLoader LangLdr;
     SystemSettings SysSet;
-    private string StringTablePath;
-    private string LogPath;
-    private string GeneralSettingPath;
-    private string StringTable_UIPath_JP;
-    private string StringTable_UIPath_EN;
-    private string StringTable_UIPath_HANT;
-    private string StringTable_UIPath_HANS;
-    private string StringTable_UIPath_Mod1;
-    private string StringTable_UIPath_Mod2;
-    private string StringTable_ItemPath_JP;
-    private string StringTable_ItemPath_EN;
-    private string StringTable_ItemPath_HANT;
-    private string StringTable_ItemPath_HANS;
-    private string StringTable_ItemPath_Mod1;
-    private string StringTable_ItemPath_Mod2;
-    private string StringTable_AreaPath_JP;
-    private string StringTable_AreaPath_EN;
-    private string StringTable_AreaPath_HANT;
-    private string StringTable_AreaPath_HANS;
-    private string StringTable_System_JP;
-    private string StringTable_TalkPath_JP;
+    private string StringTablePath, LogPath, GeneralSettingPath, StringTable_UIPath, StringTable_ItemPath, StringTable_AreaPath, StringTable_System, StringTable_TalkPath;
+    private string StringTablePrefix;
     public Text GameStartBtnTextPath;
     public Text ClickText;
     
@@ -55,6 +36,12 @@ public class LoadStringTable : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        if (File.Exists(GeneralSettingPath))
+        {
+            Debug.Log("aaa");
+            LoadSettings(GeneralSettingPath);
+            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + GeneralSettingPath + ")");
+        }
         Define = GetComponent<GameObjectDefine>();
         SMDefine = GetComponent<SystemMessageDefine>();
         ItemStr = GetComponent<ItemString>();
@@ -64,15 +51,7 @@ public class LoadStringTable : MonoBehaviour {
         LangLdr = GetComponent<LanguageLoader>();
         SysSet = GetComponent<SystemSettings>();
         StringTablePath = Application.dataPath + "/Resources/stringtable/";
-        StringTable_UIPath_JP = StringTablePath + "jp/" + stringtable_UI_FileName;
-        StringTable_UIPath_EN = StringTablePath + "en/" + stringtable_UI_FileName;
-        StringTable_UIPath_HANS = StringTablePath + "hans/" + stringtable_UI_FileName;
-        StringTable_UIPath_HANT = StringTablePath + "hant/" + stringtable_UI_FileName;
-        StringTable_UIPath_Mod1 = StringTablePath + "ext1/" + stringtable_UI_FileName;
-        StringTable_UIPath_Mod2 = StringTablePath + "ext2/" + stringtable_UI_FileName;
-        StringTable_ItemPath_JP = StringTablePath + "jp/" + stringtable_Item_FileName;
-        StringTable_ItemPath_EN = StringTablePath + "en/" + stringtable_Item_FileName;
-        StringTable_System_JP = StringTablePath + "jp/" + stringtable_system_FileName;
+        StringTable_UIPath = StringTablePath + "jp/" + stringtable_UI_FileName;
 
         GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
         LogPath = Application.dataPath + "/log/Startup.log";
@@ -86,7 +65,7 @@ public class LoadStringTable : MonoBehaviour {
         }
         DefineLoadFiles();
         //Debug.Log("File Define Loaded");
-        LoadSystemDefine(StringTable_System_JP);
+        LoadSystemDefine(StringTable_System);
         //Debug.Log("System Define Loaded");
         LoggingSystemInfo();
         //Debug.Log("SystemInfo Loaded");
@@ -94,12 +73,7 @@ public class LoadStringTable : MonoBehaviour {
         //Debug.Log("System Loaded");
 
         Debug.Log(GeneralSettingPath);
-        if (File.Exists(GeneralSettingPath))
-        {
-            Debug.Log("aaa");
-            LoadSettings(GeneralSettingPath);
-            WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + GeneralSettingPath + ")");
-        }
+        
        
         //GameStartBtnTextPath = GameObject.Find(Define.GameMenu_StartBtnText).GetComponent<Text>();
         //ClickText = GameObject.Find(Define.GameMenu_ClickText).GetComponent<Text>();
@@ -138,17 +112,13 @@ public class LoadStringTable : MonoBehaviour {
     private void DefineLoadFiles()
     {
         StringTablePath = Application.dataPath + "/Resources/stringtable/";
-        StringTable_UIPath_JP = StringTablePath + "jp/" + stringtable_UI_FileName;
-        StringTable_UIPath_EN = StringTablePath + "en/" + stringtable_UI_FileName;
-        StringTable_AreaPath_JP = StringTablePath + "jp/" + stringtable_area_FileName;
-        StringTable_UIPath_HANS = StringTablePath + "hans/" + stringtable_UI_FileName;
-        StringTable_UIPath_HANT = StringTablePath + "hant/" + stringtable_UI_FileName;
-        StringTable_UIPath_Mod1 = StringTablePath + "ext1/" + stringtable_UI_FileName;
-        StringTable_UIPath_Mod2 = StringTablePath + "ext2/" + stringtable_UI_FileName;
-        StringTable_ItemPath_JP = StringTablePath + "jp/" + stringtable_Item_FileName;
-        StringTable_ItemPath_EN = StringTablePath + "en/" + stringtable_Item_FileName;
-        StringTable_System_JP = StringTablePath + "jp/" + stringtable_system_FileName;
-        StringTable_TalkPath_JP = StringTablePath + "jp/" + stringtable_talk_FileName;
+        StringTable_UIPath = StringTablePath + "jp/" + stringtable_UI_FileName;
+
+        StringTable_AreaPath = StringTablePath + "jp/" + stringtable_area_FileName;
+      
+        StringTable_ItemPath = StringTablePath + "jp/" + stringtable_Item_FileName;
+        StringTable_System = StringTablePath + "jp/" + stringtable_system_FileName;
+        StringTable_TalkPath = StringTablePath + "jp/" + stringtable_talk_FileName;
         GeneralSettingPath = Application.dataPath + "/Resources/GeneralSettings.csv";
         LogPath = Application.dataPath + "/log/Startup.log";
     }
@@ -163,14 +133,14 @@ public class LoadStringTable : MonoBehaviour {
         //{
         //WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("FatalError_Tag") + SMDefine.GetSysMsg("UnexpectedError_Reason001") + "(" + StringTable_UIPath_JP + ")");
         //QuitForSafe();
-        CsvLoadItemString(StringTable_ItemPath_JP);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_ItemPath_JP + ")");
-        CsvLoadAreaString(StringTable_AreaPath_JP);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_AreaPath_JP + ")");
-        CsvLoadUIString(StringTable_UIPath_JP);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_UIPath_JP + ")");
-        CsvLoadTalkString(StringTable_TalkPath_JP);
-        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_TalkPath_JP + ")");
+        CsvLoadItemString(StringTable_ItemPath);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_ItemPath + ")");
+        CsvLoadAreaString(StringTable_AreaPath);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_AreaPath + ")");
+        CsvLoadUIString(StringTable_UIPath);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_UIPath + ")");
+        CsvLoadTalkString(StringTable_TalkPath);
+        WriteStartupLog(LogPath, DateTime.Now + SMDefine.GetSysMsg("Space_Tag") + SMDefine.GetSysMsg("Operation_Tag") + SMDefine.GetSysMsg("OperationMsg_001") + "(" + StringTable_TalkPath + ")");
 
         Debug.Log(SystemSettings.language);
         Debug.Log(ItemString.ItemStringTable[0].ItemName);
@@ -414,9 +384,9 @@ public class LoadStringTable : MonoBehaviour {
             var desc8 = fields[10];
             var desc9 = fields[11];
             var desc10 = fields[12];
-            if (name.Contains(HeaderString) || name == "") 
+            if (key.Contains(HeaderString))
             {
-                continue; //Ignore Strings that contains HeaderString, then go a head!
+                continue;
             }
             TalkString.TalkStringTable.Add(new Talk(key, name, type, desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8, desc9, desc10));
         }

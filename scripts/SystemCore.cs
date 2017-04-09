@@ -11,7 +11,10 @@ public class SystemCore : MonoBehaviour {
     public static float GameWorldTime;
     public static float ElapsedGamePlayTime;
     public static string GameWorldView = "N/A";
+    public static int GraphicSettingValue;
     public static bool IsGameStarted = false;
+    public static bool IsTalkStarted = false;
+    public static long Day, Hour, Minute, Second;
     public static List<int> ItemDropListKey_Spring = new List<int>();
     public static List<int> ItemDropListKey_Summer = new List<int>();
     public static List<int> ItemDropListKey_Autumn = new List<int>();
@@ -22,6 +25,8 @@ public class SystemCore : MonoBehaviour {
         GameSaveDataPath = Application.dataPath + "/save/";
         ItemDropKeyGenerator();
         Cursor.visible = true;
+        IsGameStarted = true;
+        StartCoroutine("StartCalculateElapsedTime");
 	
 	}
     enum GameWorldSeasonList
@@ -39,9 +44,22 @@ public class SystemCore : MonoBehaviour {
             GameWorldTime += Time.deltaTime;
             ElapsedGamePlayTime = GameWorldTime;
         }
-       
-       
-	}
+        Debug.Log("IsTalkStarted:" + IsTalkStarted);
+        
+
+
+
+    }
+    public void IncreaseGraphicSettings()
+    {
+        QualitySettings.IncreaseLevel();
+        Debug.Log("LevelIncreased");
+    }
+    public void DecreaseGraphicSettings()
+    {
+        QualitySettings.DecreaseLevel();
+        Debug.Log("LevelDecreased");
+    }
     public void CallSavedata()
     {
         Debug.Log("called");
@@ -85,7 +103,32 @@ public class SystemCore : MonoBehaviour {
     }
     IEnumerator StartCalculateElapsedTime()
     {
-        yield return new WaitForSeconds(1);
+        var wait = new WaitForSeconds(1);
+        while (true)
+        {
+            Second++;
+            if(Second > 59)
+            {
+                Minute++;
+                Second = 0;
+            }
+            if(Minute > 59)
+            {
+                Hour++;
+                Minute = 0;
+            }
+            if(Hour > 23)
+            {
+                Day++;
+                Hour = 0;
+            }
+            yield return wait;
+        }
+        
+    }
+    private void AdaptationRateManaging()
+    {
+
     }
 
 }
